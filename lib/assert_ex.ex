@@ -14,8 +14,8 @@ defmodule AssertEx.Test do
   def assert(:==, lhs, rhs) do
     IO.puts("""
     Failure:
-    Expected:     #{lhs}
-    to be equal to #{rhs}
+    Expected:       #{lhs}
+    to be equal to: #{rhs}
     """)
   end
 
@@ -26,8 +26,8 @@ defmodule AssertEx.Test do
   def assert(:>, lhs, rhs) do
     IO.puts("""
     Failure:
-    Expected:     #{lhs}
-    to be greater than #{rhs}
+    Expected:           #{lhs}
+    to be greater than: #{rhs}
     """)
   end
 
@@ -38,8 +38,8 @@ defmodule AssertEx.Test do
   def assert(:>=, lhs, rhs) do
     IO.puts("""
     Failure:
-    Expected:     #{lhs}
-    to be greater than/ equal to #{rhs}
+    Expected:                     #{lhs}
+    to be greater than/ equal to: #{rhs}
     """)
   end
 
@@ -50,8 +50,8 @@ defmodule AssertEx.Test do
   def assert(:<, lhs, rhs) do
     IO.puts("""
     Failure:
-    Expected:     #{lhs}
-    to be lesser than #{rhs}
+    Expected:           #{lhs}
+    to be lesser than:  #{rhs}
     """)
   end
 
@@ -62,8 +62,8 @@ defmodule AssertEx.Test do
   def assert(:<=, lhs, rhs) do
     IO.puts("""
     Failure:
-    Expected:     #{lhs}
-    to be lesser than / equal to #{rhs}
+    Expected:                     #{lhs}
+    to be lesser than / equal to: #{rhs}
     """)
   end
 end
