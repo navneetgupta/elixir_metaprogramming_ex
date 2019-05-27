@@ -1,6 +1,8 @@
 defmodule General.BeforeCompile do
   # @before_compile unquote(__MODULE__)
 
+  # @before_compile attribute accepts a module argument where a __before_compile__/1 macro must be defined.
+
   # This attribute helps to notify compiler that before finishing compilation one more step is required. __before_compile__\1 macro should be defined.
   #
 

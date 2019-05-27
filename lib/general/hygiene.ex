@@ -70,3 +70,20 @@ end
 # iex -S mix
 # iex(1)> General.HygieneOverload.Test.test_hygiene
 # 1
+
+# Variable hygiene only works because Elixir annotates variables with their context. For example, a variable x defined on line 3 of a module would be represented as:
+#
+# {:x, [line: 3], nil}
+# However, a quoted variable is represented as:
+#
+# defmodule Sample do
+#   def quoted do
+#     quote do: x
+#   end
+# end
+#
+# Sample.quoted #=> {:x, [line: 3], Sample}
+#
+# Notice that the third element in the quoted variable is the atom Sample, instead of nil, which marks the variable as coming from the Sample module. Therefore, Elixir considers these two variables as coming from different contexts and handles them accordingly.
+
+# Elixir provides similar mechanisms for imports and aliases too. This guarantees that a macro will behave as specified by its source module rather than conflicting with the target module where the macro is expanded. Hygiene can be bypassed under specific situations by using macros like var!/2 and alias!/1,
