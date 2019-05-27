@@ -25,3 +25,14 @@ end
 # Because macros replace code in our application, we can control when and what is compiled.
 
 # An example of this can be found in the Logger module. When logging is disabled no code is injected and the resulting application contains no references or function calls to logging. This is different from other languages where there is still the overhead of a function call even when the implementation is NOP.
+
+# Module.register_attribute(__MODULE__, :tests, accumulate: true) dynamically creates module attribute (something like a constants in other languages)
+
+# You might be wondering why accumulate: true is added? It allows to collect values instead of overriding previous value for the same attribute
+#
+# defmodule Warehouse do
+#   Module.register_attribute __MODULE__, :chest, accumulate: true
+#   @chest "bow"
+#   @chest "sword"
+#   IO.inspect @chest # => ["sword", "bow"]
+# end
