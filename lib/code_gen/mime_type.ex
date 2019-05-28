@@ -1,5 +1,7 @@
 defmodule CodeGen.MimiType do
-  for line <- File.stream!(Path.join([__DIR__, "mimes.txt"]), [], :line) do
+  @external_resource mime_file = Path.join([__DIR__, "mimes.txt"])
+
+  for line <- File.stream!(mime_file, [], :line) do
     [type, rest] =
       line
       |> String.split("\t")
