@@ -11,8 +11,8 @@ defmodule AssertTests.AssertionUpdated do
       # __MODULE__ => where macro is getting used
       import unquote(__MODULE__)
 
-      IO.puts("unquote(__MODULE__): #{inspect(unquote(__MODULE__))}")
-      IO.puts("__MODULE__: #{inspect(__MODULE__)}")
+      # IO.puts("unquote(__MODULE__): #{inspect(unquote(__MODULE__))}")
+      # IO.puts("__MODULE__: #{inspect(__MODULE__)}")
       Module.register_attribute(__MODULE__, :tests, accumulate: true)
       @before_compile unquote(__MODULE__)
     end
