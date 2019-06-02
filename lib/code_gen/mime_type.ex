@@ -5,18 +5,32 @@ defmodule CodeGen.MimiType do
       IO.puts("__MODULE__ : #{inspect(__MODULE__)}")
       IO.puts("unquote(__MODULE__): #{inspect(unquote(__MODULE__))}")
 
+      unquote(opts)
+      |> Keyword.keys()
+      |> Enum.each(fn t ->
+        # IO.inspect(type)
+        # extensions = Keyword.get(unquote(opts), t)
+        def exts_from_type(unquote(to_string(t))), do: unquote(Keyword.get(opts, t))
+
+        extensions
+        |> Enum.each(fn ext ->
+          def type_from_ext(ext), do: unquote(to_string(t))
+        end)
+      end)
+
       def run, do: IO.puts("test")
-      @before_compile unquote(__MODULE__)
+      # @before_compile unquote(__MODULE__)
     end
   end
 
-  defmacro __before_compile__(_env) do
-    quote do
-      IO.puts("__MODULE__ : #{inspect(__MODULE__)}")
-      IO.puts("unquote(__MODULE__): #{inspect(unquote(__MODULE__))}")
-      import unquote(__MODULE__)
-    end
-  end
+  #
+  # defmacro __before_compile__(_env) do
+  #   quote do
+  #     IO.puts("__MODULE__ : #{inspect(__MODULE__)}")
+  #     IO.puts("unquote(__MODULE__): #{inspect(unquote(__MODULE__))}")
+  #     import unquote(__MODULE__)
+  #   end
+  # end
 
   @external_resource mime_file = Path.join([__DIR__, "mimes.txt"])
 
