@@ -4,17 +4,6 @@ defmodule CodeGen.MimiType do
       IO.puts("options provided: #{inspect(unquote(opts))}")
       IO.puts("__MODULE__ : #{inspect(__MODULE__)}")
       IO.puts("unquote(__MODULE__): #{inspect(unquote(__MODULE__))}")
-      # import unquote(__MODULE__)
-
-      # opts
-      # |> IO.inspect()
-      # |> Keyword.keys()
-      # |> IO.inspect()
-      # |> Enum.each(fn x ->
-      #   def exts_from_type(unquote(x)), do: IO.inspect(unquote(x))
-      # end)
-
-      # "Options Provided : #{inspect opts}"
 
       def run, do: IO.puts("test")
       @before_compile unquote(__MODULE__)
