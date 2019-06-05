@@ -1,36 +1,16 @@
 defmodule CodeGen.MimiType do
-  defmacro __using__(opts) do
-    quote do
-      IO.puts("options provided: #{inspect(unquote(opts))}")
-      IO.puts("__MODULE__ : #{inspect(__MODULE__)}")
-      IO.puts("unquote(__MODULE__): #{inspect(unquote(__MODULE__))}")
-
-      unquote(opts)
+  defmacro __using__(options) do
+    quote bind_quoted: [options: options, module: __MODULE__] do
+      options
       |> Keyword.keys()
       |> Enum.each(fn t ->
-        # IO.inspect(type)
-        # extensions = Keyword.get(unquote(opts), t)
-        def exts_from_type(unquote(to_string(t))), do: unquote(Keyword.get(opts, t))
+        def exts_from_type(t), do: Keyword.get(unquote(options), String.to_atom(t))
 
-        extensions
-        |> Enum.each(fn ext ->
-          def type_from_ext(ext), do: unquote(to_string(t))
-        end)
+        def type_from_ext(ext) when ext in unquote(Keyword.get(options, t)),
+          do: unquote(to_string(t))
       end)
-
-      def run, do: IO.puts("test")
-      # @before_compile unquote(__MODULE__)
     end
   end
-
-  #
-  # defmacro __before_compile__(_env) do
-  #   quote do
-  #     IO.puts("__MODULE__ : #{inspect(__MODULE__)}")
-  #     IO.puts("unquote(__MODULE__): #{inspect(unquote(__MODULE__))}")
-  #     import unquote(__MODULE__)
-  #   end
-  # end
 
   @external_resource mime_file = Path.join([__DIR__, "mimes.txt"])
 
@@ -48,8 +28,6 @@ defmodule CodeGen.MimiType do
   def exts_from_type(_type), do: []
   def type_from_ext(_ext), do: nil
   def valid_type?(type), do: exts_from_type(type) |> Enum.any?()
-
-  # defguardp is_in_list(key, list) when key in list
 end
 
 # iex -S mix
