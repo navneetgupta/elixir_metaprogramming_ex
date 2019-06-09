@@ -28,3 +28,13 @@ end
 # iex(7)> Code.eval_quoted(final_expr)
 # {3, [{{:a, Elixir}, 1}, {{:b, Elixir},
 # unquote(...) - the expression inside parentheses is immediately evaluated, and inserted in place of the unquote call. This in turn means that the result of unquote must also be a valid AST fragment.
+
+# iex(1)> quote do my_var end
+# {:my_var, [], Elixir}
+# Here, the first element represents the name of the variable
+# The third element usually represents the module where the quoting happened, and is used to ensure hygiene of quoted variables. If this element is nil then the identifier is not hygienic.
+#
+#
+#
+#
+# Different AST general
