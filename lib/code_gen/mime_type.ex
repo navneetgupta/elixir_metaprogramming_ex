@@ -1,10 +1,6 @@
 defmodule CodeGen.MimiType do
   defmacro __using__(options) do
     quote bind_quoted: [options: options, module: __MODULE__] do
-      IO.inspect(module)
-      # import __MODULE__/
-      # alias Macro.escape(module)
-
       options
       |> Keyword.keys()
       |> Enum.each(fn t ->
