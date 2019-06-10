@@ -15,10 +15,6 @@ defmodule General.Tracer do
 
   defmacro deftraceable(func_head, func_body) do
     {fun_name_ast, fun_args_ast} = Macro.decompose_call(func_head)
-    IO.inspect(fun_name_ast)
-    IO.inspect(fun_args_ast)
-    IO.inspect(func_head)
-    IO.inspect(func_body)
 
     quote do
       def unquote(func_head) do
