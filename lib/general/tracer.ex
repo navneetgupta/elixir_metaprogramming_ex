@@ -12,6 +12,30 @@ defmodule General.Tracer do
   def print(string_representation, result) do
     IO.puts("Result of #{string_representation}: #{inspect(result)}")
   end
+
+  defmacro deftraceable(func_head, func_body) do
+    {fun_name_ast, fun_args_ast} = Macro.decompose_call(func_head)
+    IO.inspect(fun_name_ast)
+    IO.inspect(fun_args_ast)
+    IO.inspect(func_head)
+    IO.inspect(func_body)
+
+    quote unquote(func_head) do
+      file = __ENV__.file
+      line = __ENV__.line
+      module = __ENV__.module
+      fun_name = unquote(fun_name_ast)
+      passed_args = unquote(fun_args_ast) |> Enum.map(&IO.inspect(&1)) |> Enum.join(",")
+
+      result = unquote(func_body[:do])
+
+      loc = "#{file}(line #{line})"
+      call = "#{module}.#{function_name}(#{passed_args}) = #{inspect(result)}"
+      IO.puts("#{loc} #{call}")
+
+      result
+    end
+  end
 end
 
 # Our macro receives a quoted expression. This is very important to keep in mind - whichever arguments you send to a macro, they will already be quoted. So when we call Tracer.trace(1+2), our macro (which is a function) won’t receive 3. Instead, the contents of expression_ast will be the result of quote(do: 1+2).
