@@ -2,6 +2,6 @@ defmodule General.Traceable do
   import General.Tracer
 
   deftraceable my_fun(a, b) do
-    # a / b
+    a / b
   end
 end

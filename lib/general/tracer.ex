@@ -20,20 +20,22 @@ defmodule General.Tracer do
     IO.inspect(func_head)
     IO.inspect(func_body)
 
-    quote unquote(func_head) do
-      file = __ENV__.file
-      line = __ENV__.line
-      module = __ENV__.module
-      fun_name = unquote(fun_name_ast)
-      passed_args = unquote(fun_args_ast) |> Enum.map(&IO.inspect(&1)) |> Enum.join(",")
+    quote do
+      def unquote(func_head) do
+        file = __ENV__.file
+        line = __ENV__.line
+        module = __ENV__.module
+        fun_name = unquote(fun_name_ast)
+        passed_args = unquote(fun_args_ast) |> Enum.map(&IO.inspect(&1)) |> Enum.join(",")
 
-      result = unquote(func_body[:do])
+        result = unquote(func_body[:do])
 
-      loc = "#{file}(line #{line})"
-      call = "#{module}.#{function_name}(#{passed_args}) = #{inspect(result)}"
-      IO.puts("#{loc} #{call}")
+        loc = "#{file}(line #{line})"
+        call = "#{module}.#{fun_name}(#{passed_args}) = #{inspect(result)}"
+        IO.puts("#{loc} #{call}")
 
-      result
+        result
+      end
     end
   end
 end
