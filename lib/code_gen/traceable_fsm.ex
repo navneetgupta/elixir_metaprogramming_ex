@@ -13,3 +13,9 @@ defmodule CodeGen.TraceableFSM do
 
   deftrace(initial(), do: :running)
 end
+
+# iex -S mix
+# iex(1)> CodeGen.TraceableFSM.initial
+# iex(2)> CodeGen.TraceableFSM.initial |> CodeGen.TraceableFSM.pause
+# iex(3)> CodeGen.TraceableFSM.initial |> CodeGen.TraceableFSM.pause |> CodeGen.TraceableFSM.resume
+# iex(4)> CodeGen.TraceableFSM.initial |> CodeGen.TraceableFSM.pause |> CodeGen.TraceableFSM.resume |> CodeGen.TraceableFSM.stop
