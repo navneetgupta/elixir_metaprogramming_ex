@@ -1,11 +1,20 @@
 defmodule CodeGen.FSMTracer do
+  defmacro __using__(_) do
+    quote do
+      import unquote(__MODULE__)
+      alias unquote(__MODULE__)
+    end
+  end
+
   defmacro deftrace(func_head, func_body) do
     quote bind_quoted: [
             func_head: Macro.escape(func_head, unquote: true),
-            func_body: Macro.escape(func_body, unquote: true)
+            func_body: Macro.escape(func_body, unquote: true),
+            module: Macro.escape(__MODULE__, unquote: true)
           ] do
-      {name_ast, args_ast} = CodeGen.FSMTracer.name_with_args(func_head)
-      {arg_names, decorated_args} = CodeGen.FSMTracer.decorate_args(args_ast)
+      # `name_with_args/1` and `decorate_args/1` imported and aliased using __using__/1 macro
+      {name_ast, args_ast} = name_with_args(func_head)
+      {arg_names, decorated_args} = decorate_args(args_ast)
 
       func_head =
         Macro.postwalk(

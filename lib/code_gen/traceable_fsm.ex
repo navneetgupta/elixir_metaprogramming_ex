@@ -1,5 +1,5 @@
 defmodule CodeGen.TraceableFSM do
-  import CodeGen.FSMTracer
+  use CodeGen.FSMTracer
 
   fsm = [
     running: {:pause, :paused},
