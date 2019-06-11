@@ -1,13 +1,13 @@
 defmodule General.TracerWithGuard do
-
   defmacro deftraceable(func_head, func_body) do
     {fun_name_ast, fun_args_ast} = name_and_args_ast(func_head)
 
     {args_name, decorated_args} = decorate_args(fun_args_ast)
-    IO.puts "====fun_name_ast==== #{inspect fun_name_ast}"
-    IO.puts "====fun_args_ast==== #{inspect fun_args_ast}"
-    IO.puts "====args_name==== #{inspect args_name}"
-    IO.puts "====decorated_args==== #{inspect decorated_args}"
+    IO.puts("====fun_name_ast==== #{inspect(fun_name_ast)}")
+    IO.puts("====fun_args_ast==== #{inspect(fun_args_ast)}")
+    IO.puts("====args_name==== #{inspect(args_name)}")
+    IO.puts("====decorated_args==== #{inspect(decorated_args)}")
+
     func_head =
       Macro.postwalk(
         func_head,
