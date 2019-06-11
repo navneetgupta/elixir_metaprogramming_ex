@@ -1,13 +1,7 @@
 defmodule General.TracerWithDefault do
   defmacro deftrace(func_head, func_body) do
-    IO.puts("@@@@@@@@@@ #{inspect(func_head)}")
-    IO.puts("@@@@@@@@@@ #{inspect(func_body)}")
     {name_ast, args_ast} = name_with_args(func_head)
     {arg_names, decorated_args} = decorate_args(args_ast)
-    IO.puts("@@@@@@@@@@name_ast==== #{inspect(name_ast)}")
-    IO.puts("@@@@@@@@@@args_ast==== #{inspect(args_ast)}")
-    IO.puts("@@@@@@@@@@arg_names==== #{inspect(arg_names)}")
-    IO.puts("@@@@@@@@@@decorated_args==== #{inspect(decorated_args)}")
 
     func_head =
       Macro.postwalk(
@@ -39,21 +33,13 @@ defmodule General.TracerWithDefault do
     end
   end
 
-  defp name_with_args({:when, _, [func_head | _]}) do
-    IO.puts("====name_with_args/2==== #{inspect(func_head)}")
-    name_with_args(func_head)
-  end
+  defp name_with_args({:when, _, [func_head | _]}), do: name_with_args(func_head)
 
-  defp name_with_args(func_head) do
-    IO.puts("=====name_with_args/1=== #{inspect(func_head)}")
-    Macro.decompose_call(func_head)
-  end
+  defp name_with_args(func_head), do: Macro.decompose_call(func_head)
 
   defp decorate_args([]), do: {[], []}
 
   defp decorate_args(args_ast) do
-    IO.puts("====decorate_args==== #{inspect(args_ast)}")
-
     args_ast
     |> Enum.with_index()
     |> Enum.map(&decorate(&1))
