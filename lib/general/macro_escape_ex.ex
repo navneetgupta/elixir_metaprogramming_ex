@@ -14,3 +14,11 @@ defmodule General.MacroExcapeCorrect do
     unquote(map)
   end
 end
+
+defmodule General.MacroEscapeCorrect2 do
+  # map = Macro.escape(%{name: "Navneet"})
+
+  def value do
+    unquote(quote do: %{name: "Navneet"})
+  end
+end
