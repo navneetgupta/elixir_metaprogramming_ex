@@ -7,6 +7,7 @@
 #   end
 # end
 
+# Macro.escape is used to take an Elixir literal and recursively escape it for injection into an AST. Its use is required when you need to inject an Elixir value into an already-quoted expression where the value is not an AST literal. 
 defmodule General.MacroExcapeCorrect do
   map = Macro.escape(%{name: "Navneet"})
 
